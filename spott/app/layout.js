@@ -2,6 +2,8 @@
 import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import Header from "@/components/ui/header";
+import { ConvexClientProvider } from "./ConvexClientProvider";
+import { ClerkProvider } from "@clerk/nextjs";
 
 export const metadata = {
   title: "SPOTT",
@@ -19,6 +21,8 @@ export default function RootLayout({ children }) {
             enableSystem
             disableTransitionOnChange
           >
+        <ClerkProvider>  
+        <ConvexClientProvider>
         {/* {Header} */}
         <Header />
 
@@ -36,6 +40,8 @@ export default function RootLayout({ children }) {
             <div className="text-sm text-gray-400">Made with ❤️ By Shan Ali</div>
         </footer>
         </main>
+        </ConvexClientProvider>
+        </ClerkProvider>
         </ThemeProvider>
       </body>
     </html>
