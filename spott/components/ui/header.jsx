@@ -40,12 +40,15 @@ const Header = () => {
                             <Link href="/explore">Explore</Link>
                         </Button>
                         <Authenticated>
-                            <Button size="sm" asChild className="flex gap-2 mr-4">
+                             {/* Create Event Button */}
+                            <Button size="sm" asChild className="flex gap-5 mr-4">
                                 <Link href="/create-event">
                                 <Plus className="w-4 h-4" />
                                 <span className="hidden sm:inline">Create Event</span>
                                 </Link>
                             </Button>
+
+                             {/* User Button */}
                             <UserButton>
                                 <UserButton.MenuItems> 
                                     <UserButton.Link
