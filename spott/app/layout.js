@@ -1,10 +1,16 @@
-
 import "./globals.css";
+import { Poppins } from "next/font/google";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import Header from "@/components/ui/header";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-poppins",
+});
 
 export const metadata = {
   title: "SPOTT",
@@ -13,9 +19,8 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning
-    >
-      <body className={`bg-linear-to-br from-gray-950 via-zinc-900 to-stone-900 text-white`}>
+    <html lang="en" suppressHydrationWarning className={poppins.variable}>
+      <body className={`${poppins.className} bg-linear-to-br from-gray-950 via-zinc-900 to-stone-900 text-white`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
