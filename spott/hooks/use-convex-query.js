@@ -1,3 +1,4 @@
+import { useQuery, useMutation } from 'convex/react';
 import { useEffect, useState } from 'react';
 import {toast} from 'sonner';
 
@@ -33,8 +34,19 @@ export const useConvexMutation = (mutation, ...args) => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const mutate = async (...mutationArgs) => {
-        
+    const mutate = async (...args) => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await mutationFn(...args);
+            setData(response);
+            setError(null);
+          } catch (err) {
+            setError(err);
+            toast.error("Failed to load data");
+          } finally {
+            setIsLoading(false);
+          }
     }
-
+    return { mutate, data, isLoading, error };
 }
