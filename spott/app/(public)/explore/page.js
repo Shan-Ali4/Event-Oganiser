@@ -63,7 +63,7 @@ const ExplorePage = () => {
     router.push(`/events/${slug}`);
   };
   const handleCategoryClick = (categoryId) => {
-    router.push(`/events/${categoryId}`);
+    router.push(`/explore/${categoryId}`);
   };
 
   const handleViewLocalEvents = () => {
@@ -172,7 +172,7 @@ const ExplorePage = () => {
         <div className="mb-16">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h2 classname="text-3xl font-bold mb-1">Events Nearby You</h2>
+              <h2 className="text-3xl font-bold mb-1">Events Nearby You</h2>
               <p className="text-muted-foreground">
               Happening in {currentUser?.location?.city || "your area"}</p>
             </div>
@@ -226,8 +226,46 @@ const ExplorePage = () => {
       </div>
 
       {/* Popular Events Across Countries */}
+       {popularEvents && popularEvents.length > 0 && (
+        <div className="mb-16">
+          <div className="mb-6">
+            <h2 className="text-3xl font-bold mb-1">Popular Across India</h2>
+            <p className="text-muted-foreground">Trending events nationwide</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {popularEvents.map((event) => (
+              <EventCard
+                key={event._id}
+                event={event}
+                variant="list"
+                onClick={() => handleEventClick(event.slug)}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Empty State */}
+       {!loadingFeatured &&
+        !loadingLocal &&
+        !loadingPopular &&
+        (!featuredEvents || featuredEvents.length === 0) &&
+        (!localEvents || localEvents.length === 0) &&
+        (!popularEvents || popularEvents.length === 0) && (
+          <Card className="p-12 text-center">
+            <div className="max-w-md mx-auto space-y-4">
+              <div className="text-6xl mb-4">🎉</div>
+              <h2 className="text-2xl font-bold">No events yet</h2>
+              <p className="text-muted-foreground">
+                Be the first to create an event in your area!
+              </p>
+              <Button asChild className="gap-2">
+                <a href="/create-event">Create Event</a>
+              </Button>
+            </div>
+          </Card>
+        )}
 
     </>
   );

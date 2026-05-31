@@ -13,7 +13,7 @@ const ExploreLayout = ({children}) => {
   return <div className="pb-16 min-h-screen">
     <div className="max-w-7xl mx-auto px-6">
       {!isMainExplore && (
-        <div clasName="mb-6">
+        <div className="mb-6">
             <Button variant="ghost"
             onClick={()=>router.push('/explore')}
             className="gap-2 -ml-2">
