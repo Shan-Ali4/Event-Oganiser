@@ -9,7 +9,7 @@ import { Authenticated, Unauthenticated } from "convex/react";
 import { BarLoader } from 'react-spinners';
 import { useStoreUser } from '@/hooks/use-store-user';
 import { Building, Plus, Ticket } from 'lucide-react';
-import { OnboardingModal } from './onboarding-modal';
+import OnboardingModal from "./onboarding-modal";
 import { useOnboarding } from "@/hooks/use-onboarding";
 
 
@@ -86,11 +86,11 @@ const Header = () => {
             </nav>
 
             {/* Modals */}
-            <OnboardingModal
-              isOpen={showOnboarding}
-              onClose={handleOnboardingSkip}
-              onComplete={handleOnboardingComplete}
-            />
+        <OnboardingModal
+        isOpen={showOnboarding}
+        onClose={handleOnboardingSkip}
+        onComplete={handleOnboardingComplete}
+      />
             
         </>
     )
