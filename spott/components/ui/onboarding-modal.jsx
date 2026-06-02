@@ -97,7 +97,12 @@ export default function OnboardingModal({ isOpen, onClose, onComplete }) {
   const progress = (step / 2) * 100;
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) onClose?.();
+      }}
+    >
       <DialogContent className="sm:max-w-2xl">
         <DialogHeader>
           <div className="mb-4">
@@ -240,18 +245,26 @@ export default function OnboardingModal({ isOpen, onClose, onComplete }) {
         <div className="flex gap-3 pt-4">
           {step > 1 && (
             <Button
+              type="button"
               variant="outline"
+              size="lg"
               onClick={() => setStep(step - 1)}
-              className="gap-2"
+              className="h-11 gap-2"
             >
               <ArrowLeft className="w-4 h-4" />
               Back
             </Button>
           )}
           <Button
+            type="button"
+            size="lg"
             onClick={handleNext}
-            disabled={isLoading}
-            className="flex-1 gap-2"
+            disabled={
+              isLoading ||
+              (step === 1 && selectedInterests.length < 3) ||
+              (step === 2 && (!location.city || !location.state))
+            }
+            className="h-11 flex-1 gap-2"
           >
             {isLoading
               ? "Completing..."
