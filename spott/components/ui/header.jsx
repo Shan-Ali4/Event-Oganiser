@@ -11,7 +11,7 @@ import { useStoreUser } from '@/hooks/use-store-user';
 import { Building, Plus, Ticket } from 'lucide-react';
 import OnboardingModal from "./onboarding-modal";
 import { useOnboarding } from "@/hooks/use-onboarding";
-
+import SearchLocationBar from './search-location-bar';
 
 const Header = () => {
 
@@ -37,33 +37,36 @@ const Header = () => {
                     </Link>
 
                     {/* Search & Location -  Desktop Only */}
+                    <div className='hidden md:flex flex-1 justify-center'>
+                        <SearchLocationBar />
+                    </div>
                     {/* Right Side Action */}
                     <div className='flex items-center'>
-                        <Button variant={"ghost"} size="sm" onClick={() => setShowUpgradeModal(true)}>Pricing</Button>                        
+                        <Button variant={"ghost"} size="sm" onClick={() => setShowUpgradeModal(true)}>Pricing</Button>
                         <Button variant="ghost" size="sm" asChild className={"mr-2"}>
                             <Link href="/explore">Explore</Link>
                         </Button>
                         <Authenticated>
-                             {/* Create Event Button */}
+                            {/* Create Event Button */}
                             <Button size="sm" asChild className="flex gap-5 mr-4">
                                 <Link href="/create-event">
-                                <Plus className="w-4 h-4" />
-                                <span className="hidden sm:inline">Create Event</span>
+                                    <Plus className="w-4 h-4" />
+                                    <span className="hidden sm:inline">Create Event</span>
                                 </Link>
                             </Button>
 
-                             {/* User Button */}
+                            {/* User Button */}
                             <UserButton>
-                                <UserButton.MenuItems> 
+                                <UserButton.MenuItems>
                                     <UserButton.Link
-                                    label="My Tickets"
-                                    labelIcon={<Ticket size={16} />}
-                                    href="/my-tickets"
+                                        label="My Tickets"
+                                        labelIcon={<Ticket size={16} />}
+                                        href="/my-tickets"
                                     />
                                     <UserButton.Link
-                                    label="My Events"
-                                    labelIcon={<Building size={16} />}
-                                    href="/my-events"
+                                        label="My Events"
+                                        labelIcon={<Building size={16} />}
+                                        href="/my-events"
                                     />
                                     <UserButton.Action label="manageAccount" />
                                 </UserButton.MenuItems>
@@ -74,24 +77,27 @@ const Header = () => {
                                 <Button size="sm">Sign In</Button>
                             </SignInButton>
                         </Unauthenticated>
-                            </div>
-                        </div>
+                    </div>
+                </div>
 
                 {/* Mobile Search & Location - Below Header */}
+                <div className='md:hidden border-t px-3 py-3'>
+                    <SearchLocationBar />
+                </div>
 
                 {/* Loader */}
                 {isLoading && <div className='absolute bottom-0 left-0 w-full'>
-                    <BarLoader width="100%" color= "purple"/>
+                    <BarLoader width="100%" color="purple" />
                 </div>}
             </nav>
 
             {/* Modals */}
-        <OnboardingModal
-        isOpen={showOnboarding}
-        onClose={handleOnboardingSkip}
-        onComplete={handleOnboardingComplete}
-      />
-            
+            <OnboardingModal
+                isOpen={showOnboarding}
+                onClose={handleOnboardingSkip}
+                onComplete={handleOnboardingComplete}
+            />
+
         </>
     )
 }
