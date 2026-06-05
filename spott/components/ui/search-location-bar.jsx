@@ -7,7 +7,7 @@ import { State, City } from "country-state-city";
 import { format } from "date-fns";
 import { useConvexQuery, useConvexMutation } from "@/hooks/use-convex-query";
 import { api } from "@/convex/_generated/api";
-import { createLocationSlug } from "@/lib/location-utils";
+import { createLocationslug } from "@/lib/location-utils";
 import { getCategoryIcon } from "@/lib/data";
 import { debounce } from "lodash";
 
@@ -88,6 +88,21 @@ const SearchLocationBar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   })
 
+   const handleLocationSelect = async (city, state) => {
+    try {
+      if (currentUser?.interests && currentUser?.location) {
+        await updateLocation({
+          location: { city, state, country: "India" },
+          interests: currentUser.interests,
+        });
+      }
+      const slug = createLocationslug(city, state);
+      router.push(`/explore/${slug}`);
+    } catch (error) {
+      console.error("Failed to update location:", error);
+    }
+  };
+
   
 
 
@@ -144,15 +159,63 @@ const SearchLocationBar = () => {
                           </span>
                         </div>
                       </div>
+                      {event.ticketType === "free" && (
+                        <Badge variant="secondary" className="text-xs">
+                          Free
+                        </Badge>
+                      )}
                   </div>
                 </button>
               ))}
             </div>
           ) : null}
-
         </div>
       )}
     </div>
+     {/* State Select */}
+      <Select
+        value={selectedState}
+        onValueChange={(value) => {
+          setSelectedState(value);
+          setSelectedCity("");
+        }}
+      >
+        <SelectTrigger className="w-32 h-9 border-l-0 rounded-none">
+          <SelectValue placeholder="State" />
+        </SelectTrigger>
+        <SelectContent>
+          {/* <SelectItem value="">State</SelectItem> */}
+          {indianStates.map((state) => (
+            <SelectItem key={state.isoCode} value={state.name}>
+              {state.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+
+      {/* City Select */}
+      <Select
+        value={selectedCity}
+        onValueChange={(value) => {
+          setSelectedCity(value);
+          if (value && selectedState) {
+            handleLocationSelect(value, selectedState);
+          }
+        }}
+        disabled={!selectedState}
+      >
+        <SelectTrigger className="w-32 h-9 rounded-none rounded-r-md ">
+          <SelectValue placeholder="City" />
+        </SelectTrigger>
+        <SelectContent>
+          {/* <SelectItem value="">City</SelectItem> */}
+          {cities.map((city) => (
+            <SelectItem key={city.name} value={city.name}>
+              {city.name}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
 
   </div>
   )
