@@ -8,10 +8,17 @@ import { Button } from "@/components/ui/button";
 import { Authenticated, Unauthenticated } from "convex/react";
 import { BarLoader } from 'react-spinners';
 import { useStoreUser } from '@/hooks/use-store-user';
-import { Building, Plus, Ticket } from 'lucide-react';
+import { Building, Crown, Plus, Ticket } from 'lucide-react';
 import OnboardingModal from "./onboarding-modal";
 import { useOnboarding } from "@/hooks/use-onboarding";
 import SearchLocationBar from './search-location-bar';
+import { Badge } from "./badge";
+import UpgradeModal from './upgrade-modal';
+import { useAuth } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+import { PricingTable } from "@clerk/nextjs";
+
+
 
 const Header = () => {
 
@@ -19,6 +26,11 @@ const Header = () => {
     const [showUpgradeModal, setShowUpgradeModal] = useState(false);
 
     const { showOnboarding, handleOnboardingComplete, handleOnboardingSkip } = useOnboarding()
+
+    const { has } = useAuth();
+    const hasPro = has?.({ plan: "pro" });
+
+
     return (
         <>
             <nav className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-xl z-20 border-b">
@@ -34,6 +46,12 @@ const Header = () => {
                             priority
                         />
                         {/* Pro Badge */}
+                        {hasPro && (
+                            <Badge className="bg-linear-to-r from-pink-500 to-orange-500 gap-1 text-white ml-3">
+                                <Crown className="w-3 h-3" />
+                                Pro
+                            </Badge>
+                        )}
                     </Link>
 
                     {/* Search & Location -  Desktop Only */}
@@ -42,7 +60,15 @@ const Header = () => {
                     </div>
                     {/* Right Side Action */}
                     <div className='flex items-center'>
-                        <Button variant={"ghost"} size="sm" onClick={() => setShowUpgradeModal(true)}>Pricing</Button>
+                        {!hasPro && (
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={() => setShowUpgradeModal(true)}
+                            >
+                                Pricing
+                            </Button>
+                        )}
                         <Button variant="ghost" size="sm" asChild className={"mr-2"}>
                             <Link href="/explore">Explore</Link>
                         </Button>
@@ -98,6 +124,11 @@ const Header = () => {
                 onComplete={handleOnboardingComplete}
             />
 
+            <UpgradeModal
+                isOpen={showUpgradeModal}
+                onClose={() => setShowUpgradeModal(false)}
+                trigger="header"
+            />
         </>
     )
 }
