@@ -33,7 +33,7 @@ import {
 } from "@/components/ui/select";
 
 import UnsplashImagePicker from "@/components/ui/unplash-image-picker";
-// import AIEventCreator from "./_components/ai-event-creator";
+import AiEventCreator from "./_components/ai-event-creator";
 import UpgradeModal from "@/components/ui/upgrade-modal"
 import { CATEGORIES } from "@/lib/data";
 import Image from "next/image";
@@ -190,7 +190,6 @@ const CreateEventPage = () => {
                 ticketPrice: data.ticketPrice || undefined,
                 coverImage: data.coverImage || undefined,
                 themeColor: data.themeColor,
-                hasPro,
             });
 
             toast.success("Event created successfully! 🎉");
@@ -200,14 +199,14 @@ const CreateEventPage = () => {
         }
     };
 
-    // const handleAIGenerate = (generatedData) => {
-    //     setValue("title", generatedData.title);
-    //     setValue("description", generatedData.description);
-    //     setValue("category", generatedData.category);
-    //     setValue("capacity", generatedData.suggestedCapacity);
-    //     setValue("ticketType", generatedData.suggestedTicketType);
-    //     toast.success("Event details filled! Customize as needed.");
-    // };
+    const handleAIGenerate = (generatedData) => {
+        setValue("title", generatedData.title);
+        setValue("description", generatedData.description);
+        setValue("category", generatedData.category);
+        setValue("capacity", generatedData.suggestedCapacity);
+        setValue("ticketType", generatedData.suggestedTicketType);
+        toast.success("Event details filled! Customize as needed.");
+    };
 
     return (
         <div className="min-h-screen transition-colors duration-300 px-6 py-8 -mt-6 md:-mt-16 lg:-mt-5 lg:rounded-md"
@@ -223,7 +222,7 @@ const CreateEventPage = () => {
                     )}
                 </div>
                 {/* Ai Event Creator */}
-                {/* <AIEventCreator onEventGenerated={handleAIGenerate} /> */}
+                <AiEventCreator onEventGenerated={handleAIGenerate} />
             </div>
             <div className="max-w-6xl mx-auto grid md:grid-cols-[320px_1fr] gap-10">
                 {/* LEFT: Image + Theme */}
