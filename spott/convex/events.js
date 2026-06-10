@@ -30,8 +30,9 @@ export const createEvent = mutation({
         try {
             const user = await ctx.runQuery(internal.users.getCurrentUser);
 
-
-
+            if (!user) {
+                throw new Error("User must be authenticated to create an event");
+            }
 
             // Force default color for Free users
             const themeColor =  args.themeColor;
@@ -87,6 +88,10 @@ export const getEventBySlug = query({
 export const getMyEvents = query({
   handler: async (ctx) => {
     const user = await ctx.runQuery(internal.users.getCurrentUser);
+
+    if (!user) {
+      throw new Error("User must be authenticated to view their events");
+    }
 
     const events = await ctx.db
       .query("events")
