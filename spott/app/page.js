@@ -29,8 +29,8 @@ export default function Home() {
           {/* Right */}
           <div>
             <Image
-              src="/hero.png"
-              alt="hero png"
+              src="/hero.gif"
+              alt="hero gif"
               width={700}
               height={700}
               className="w-full h-auto"

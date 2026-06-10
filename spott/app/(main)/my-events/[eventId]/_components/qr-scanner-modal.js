@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import React from 'react'
 
-const QRScannerModal = () => {
+const QRScannerModal = ({ isOpen, onClose }) => {
     const [scannerReady, setScannerReady] = useState(false);
     const [error, setError] = useState(null);
 
