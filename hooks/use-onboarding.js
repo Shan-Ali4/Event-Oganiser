@@ -25,7 +25,7 @@ export function useOnboarding() {
             );
 
             if (requiresOnboarding) {
-                setShowOnboarding(true);
+                queueMicrotask(() => setShowOnboarding(true));
             }
         }
     }, [isLoading, currentUser, pathname]);

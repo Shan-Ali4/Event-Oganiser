@@ -1,6 +1,5 @@
 
-
-export default {
+const authConfig = {
   providers: [
     {
       // Replace with your Clerk Frontend API URL
@@ -11,4 +10,6 @@ export default {
       applicationID: "convex",
     },
   ]
-} 
+};
+
+export default authConfig;

@@ -44,6 +44,7 @@ const EventPage = () => {
   const router = useRouter();
   const { user } = useUser();
   const [showRegisterModal, setShowRegisterModal] = useState(false);
+  const [now] = useState(Date.now);
 
   // Fetch event details
   const { data: event, isLoading } = useConvexQuery(api.events.getEventBySlug, {
@@ -96,7 +97,7 @@ const EventPage = () => {
   };
 
   const isEventFull = event.registrationCount >= event.capacity;
-  const isEventPast = event.endDate < Date.now();
+  const isEventPast = event.endDate < now;
   const isOrganizer = user?.id === event.organizerId;
 
 

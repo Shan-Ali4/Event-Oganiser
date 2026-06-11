@@ -12,7 +12,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
-import React, { useRef } from "react";
+import React, { useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight, Calendar, MapPin, Users } from "lucide-react";
@@ -28,7 +28,10 @@ import { CATEGORIES } from "@/lib/data";
 const ExplorePage = () => {
   const router = useRouter();
   const { data: currentUser } = useConvexQuery(api.users.getCurrentUser);
-  const plugin = useRef(Autoplay({ delay: 5000, stopOnInteraction: true }));
+  const autoplayPlugin = useMemo(
+    () => Autoplay({ delay: 5000, stopOnInteraction: true }),
+    []
+  );
 
 
   const { data: featuredEvents, isLoading: loadingFeatured } =
@@ -99,9 +102,9 @@ const ExplorePage = () => {
         <div className="mb-16">
           <Carousel
             className="w-full"
-            plugins={[plugin.current]}
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.reset}
+            plugins={[autoplayPlugin]}
+            onMouseEnter={() => autoplayPlugin.stop()}
+            onMouseLeave={() => autoplayPlugin.reset()}
           >
             <CarouselContent>
               {featuredEvents.map((event) => (

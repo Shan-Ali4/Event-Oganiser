@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { QrCode, Loader2 } from "lucide-react";
 import { useConvexMutation } from "@/hooks/use-convex-query";
 import { api } from "@/convex/_generated/api";
@@ -23,7 +23,7 @@ const QRScannerModal = ({ isOpen, onClose }) => {
         api.registrations.checkInAttendee
     );
 
-    const handleCheckIn = async (qrCode) => {
+    const handleCheckIn = useCallback(async (qrCode) => {
         try {
             const result = await checkInAttendee({ qrCode });
 
@@ -36,7 +36,7 @@ const QRScannerModal = ({ isOpen, onClose }) => {
         } catch (error) {
             toast.error(error.message || "Invalid QR code");
         }
-    };
+    }, [checkInAttendee, onClose]);
 
     // Initialize QR Scanner
     useEffect(() => {
@@ -116,7 +116,7 @@ const QRScannerModal = ({ isOpen, onClose }) => {
             }
             setScannerReady(false);
         };
-    }, [isOpen]);
+    }, [isOpen, handleCheckIn]);
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>

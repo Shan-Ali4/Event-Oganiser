@@ -24,6 +24,7 @@ import React from 'react'
 const MyTickets = () => {
     const router = useRouter();
     const [selectedTicket, setSelectedTicket] = useState(null);
+    const [now] = useState(Date.now);
 
     const { data: registrations, isLoading } = useConvexQuery(
         api.registrations.getMyRegistrations
@@ -39,8 +40,6 @@ const MyTickets = () => {
             </div>
         );
     }
-    const now = Date.now();
-
     const upcomingTickets = registrations?.filter(
         (reg) =>
             reg.event && 

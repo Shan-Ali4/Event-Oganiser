@@ -4,8 +4,6 @@ import { NextResponse } from "next/server";
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
 
-console.log(process.env.GEMINI_API_KEY);
-
 export async function POST(req) {
     try {
         const { prompt } = await req.json();
@@ -57,8 +55,6 @@ Rules:
         } else if (cleanedText.startsWith("```")) {
             cleanedText = cleanedText.replace(/```\n?/g, "");
         }
-        console.log(cleanedText);
-
         const eventData = JSON.parse(cleanedText)
 
         return NextResponse.json(eventData);

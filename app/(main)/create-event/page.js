@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import { format } from "date-fns";
@@ -84,7 +84,6 @@ const CreateEventPage = () => {
     const {
         register,
         handleSubmit,
-        watch,
         setValue,
         control,
         formState: { errors },
@@ -103,12 +102,18 @@ const CreateEventPage = () => {
         },
     });
 
-    const themeColor = watch("themeColor");
-    const ticketType = watch("ticketType");
-    const selectedState = watch("state");
-    const startDate = watch("startDate");
-    const endDate = watch("endDate");
-    const coverImage = watch("coverImage");
+    const [themeColor, ticketType, selectedState, startDate, endDate, coverImage] =
+        useWatch({
+            control,
+            name: [
+                "themeColor",
+                "ticketType",
+                "state",
+                "startDate",
+                "endDate",
+                "coverImage",
+            ],
+        });
 
     const indianStates = useMemo(() => State.getStatesOfCountry("IN"), []);
     const cities = useMemo(() => {

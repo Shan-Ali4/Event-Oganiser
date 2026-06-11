@@ -57,8 +57,10 @@ const SearchLocationBar = () => {
 
   useEffect(() => {
     if (currentUser?.location) {
-      setSelectedState(currentUser.location.state || "");
-      setSelectedCity(currentUser.location.city || "");
+      queueMicrotask(() => {
+        setSelectedState(currentUser.location.state || "");
+        setSelectedCity(currentUser.location.city || "");
+      });
     }
   }, [currentUser, isLoading]);
 
