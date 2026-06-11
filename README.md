@@ -41,3 +41,6 @@ SPOTT/
 ├── lib/                 # Utility functions and constants
 ├── public/              # Static assets
 └── package.json         # Project dependencies and scripts
+
+
+## Made by Shan Ali
