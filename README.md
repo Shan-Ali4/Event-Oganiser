@@ -30,6 +30,18 @@ The platform is built with Next.js, Convex, Clerk, and Tailwind CSS, with featur
 - **Image Search:** Unsplash API
 - **QR Codes:** react-qr-code, html5-qrcode
 
+## Home Page
+
+![Home Page](./screenshot/home-page.png)
+
+## Events Page
+
+![Events Page](./screenshot/event-page.png)
+
+## Dashboard
+
+![Dashboard](./screenshot/dash-board.png)
+
 ## Project Structure
 
 ```txt
